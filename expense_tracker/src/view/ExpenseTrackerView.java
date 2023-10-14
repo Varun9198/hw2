@@ -75,9 +75,9 @@ public class ExpenseTrackerView extends JFrame {
     filterPanel.add(filterLabel);
     filterPanel.add(filterDropDown);
 
-    filterPanel.add(amountFilterMinField);
-    filterPanel.add(amountFilterMaxField);
-    filterPanel.add(categoryFilterField);
+    filterPanel.add(amountFilterMinField).setVisible(false);
+    filterPanel.add(amountFilterMaxField).setVisible(false);
+    filterPanel.add(categoryFilterField).setVisible(false);
     filterPanel.add(applyFilterBtn);
 
     filterDropDown.addItemListener(e -> {
@@ -92,6 +92,7 @@ public class ExpenseTrackerView extends JFrame {
           amountFilterMinField.setVisible(true);
           amountFilterMaxField.setVisible(true);
         }
+        setVisible(true);
       }
     });
 
