@@ -53,11 +53,11 @@ public class ExpenseTrackerController {
   }
   
   // Other controller methods
-  public void applyFilter(List<Object> filterObject){
+  public void applyFilter(String filter, List<Object> filterObject){
     // Get transactions from model
     List<Transaction> allTransactions = model.getTransactions();
     List<Transaction> filteredTransactions;
-    if(true){ //TODO
+    if("Category".equals(filter)){
       filteredTransactions = categoryFilter.filter(allTransactions, filterObject);
     } else {
       filteredTransactions = amountFilter.filter(allTransactions, filterObject);
