@@ -56,13 +56,13 @@ public class ExpenseTrackerController {
   public void applyFilter(String filter, List<Object> filterObject){
     // Get transactions from model
     List<Transaction> allTransactions = model.getTransactions();
-    List<Transaction> filteredTransactions;
-    if("Category".equals(filter)){
-      filteredTransactions = categoryFilter.filter(allTransactions, filterObject);
-    } else {
-      filteredTransactions = amountFilter.filter(allTransactions, filterObject);
-    }
+//    List<Transaction> filteredTransactions;
+//    if("Category".equals(filter)){
+//      filteredTransactions = categoryFilter.filter(allTransactions, filterObject);
+//    } else {
+//      filteredTransactions = amountFilter.filter(allTransactions, filterObject);
+//    }
     // Pass to view
-    view.refreshTable(filteredTransactions);
+    view.refreshFilteredTable(allTransactions, allTransactions);
   }
 }

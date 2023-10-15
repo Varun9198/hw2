@@ -13,6 +13,11 @@ import java.text.NumberFormat;
 
 import model.Transaction;
 import java.util.List;
+import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableCellRenderer;
+import java.awt.Color;
+import javax.swing.JTable;
 
 public class ExpenseTrackerView extends JFrame {
 
@@ -25,7 +30,7 @@ public class ExpenseTrackerView extends JFrame {
   private JFormattedTextField amountFilterMinField;
   private JFormattedTextField amountFilterMaxField;
   private JTextField categoryFilterField; //TODO: add validation
-  private JButton applyFilterBtn;
+  private JButton applyFilterBtn; //TODO: add clear filter button
   
 
   public ExpenseTrackerView() {
@@ -33,7 +38,7 @@ public class ExpenseTrackerView extends JFrame {
     setSize(600, 400); // Make GUI larger
 
     String[] columnNames = {"serial", "Amount", "Category", "Date"};
-    String[] filters = {"Category", "Amount"};
+    String[] filters = {"Category", "Amount"}; //TODO: Add None
     this.model = new DefaultTableModel(columnNames, 0);
 
     addTransactionBtn = new JButton("Add Transaction");
@@ -132,14 +137,50 @@ public class ExpenseTrackerView extends JFrame {
 
       // Fire table update
       transactionsTable.updateUI();
-  
-    }  
-  
 
-  
-  
+    }
+
+    public void refreshFilteredTable(List<Transaction> transactions, List<Transaction> filteredTransactions) {
+      // Clear existing rows
+      model.setRowCount(0);
+      // Get row count
+      int rowNum = model.getRowCount();
+      double totalCost=0;
+      // Calculate total cost
+      for(Transaction t : transactions) {
+        totalCost+=t.getAmount();
+      }
+      // Add rows from transactions list
+      for(Transaction t : transactions) {
+        model.addRow(new Object[]{rowNum+=1,t.getAmount(), t.getCategory(), t.getTimestamp()});
+      }
+      // Add total row
+      Object[] totalRow = {"Total", null, null, totalCost};
+      model.addRow(totalRow);
+
+      transactionsTable.setDefaultRenderer(Object.class, new DefaultTableCellRenderer() {
+        @Override
+        public java.awt.Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+          java.awt.Component cellComponent = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+
+          // Highlight rows in green if they are in the filteredTransactions list
+          if (row < filteredTransactions.size() && filteredTransactions.contains(transactions.get(row))) {
+            cellComponent.setBackground(new Color(173, 255, 168));
+          }
+
+          return cellComponent;
+        }
+      });
+      // Fire table update
+      transactionsTable.updateUI();
+
+  }
+
   public JButton getAddTransactionBtn() {
     return addTransactionBtn;
+  }
+  public JButton getApplyFilterBtn() {
+    return applyFilterBtn;
   }
   public DefaultTableModel getTableModel() {
     return model;

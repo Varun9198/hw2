@@ -34,6 +34,10 @@ public class ExpenseTrackerApp {
       }
     });
 
+    view.getApplyFilterBtn().addActionListener(e -> {
+        controller.applyFilter("Category", null);
+    });
+
   }
 
 }
