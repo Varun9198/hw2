@@ -7,6 +7,10 @@ import view.ExpenseTrackerView;
 import model.Transaction;
 import controller.InputValidation;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
+
 public class ExpenseTrackerApp {
 
   public static void main(String[] args) {
@@ -35,7 +39,18 @@ public class ExpenseTrackerApp {
     });
 
     view.getApplyFilterBtn().addActionListener(e -> {
-        controller.applyFilter("Category", null);
+        List<Object> filterObjects = new ArrayList<>();
+        String filterType = Objects.requireNonNull(view.getFilterDropDown().getSelectedItem()).toString();
+        switch (filterType) {
+          case "Category":
+            filterObjects.add(view.getCategoryFilterField().getText());
+            break;
+          case "Amount":
+            filterObjects.add(view.getAmountFilterMinField().getText());
+            filterObjects.add(view.getAmountFilterMaxField().getText());
+            break;
+        }
+        controller.applyFilter(filterType, filterObjects);
     });
 
     view.getClearFilterBtn().addActionListener(e -> {

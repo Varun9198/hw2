@@ -30,7 +30,7 @@ public class ExpenseTrackerView extends JFrame {
   private JFormattedTextField amountFilterMinField;
   private JFormattedTextField amountFilterMaxField;
   private JTextField categoryFilterField; //TODO: add validation
-  private JButton applyFilterBtn; //TODO: add clear filter button
+  private JButton applyFilterBtn;
   private JButton clearFilterBtn;
   
 
@@ -39,7 +39,7 @@ public class ExpenseTrackerView extends JFrame {
     setSize(600, 400); // Make GUI larger
 
     String[] columnNames = {"serial", "Amount", "Category", "Date"};
-    String[] filters = {"Category", "Amount"}; //TODO: Add None
+    String[] filters = {"None", "Category", "Amount"};
     this.model = new DefaultTableModel(columnNames, 0);
 
     addTransactionBtn = new JButton("Add Transaction");
@@ -93,11 +93,14 @@ public class ExpenseTrackerView extends JFrame {
           categoryFilterField.setVisible(true);
           amountFilterMinField.setVisible(false);
           amountFilterMaxField.setVisible(false);
-        }
-        if(filterDropDown.getSelectedItem() == "Amount") {
+        } else if(filterDropDown.getSelectedItem() == "Amount") {
           categoryFilterField.setVisible(false);
           amountFilterMinField.setVisible(true);
           amountFilterMaxField.setVisible(true);
+        } else {
+          categoryFilterField.setVisible(false);
+          amountFilterMinField.setVisible(false);
+          amountFilterMaxField.setVisible(false);
         }
         setVisible(true);
       }
@@ -165,9 +168,12 @@ public class ExpenseTrackerView extends JFrame {
         public java.awt.Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
           java.awt.Component cellComponent = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
 
+          System.out.println(filteredTransactions.size());
           // Highlight rows in green if they are in the filteredTransactions list
           if (row < filteredTransactions.size() && filteredTransactions.contains(transactions.get(row))) {
             cellComponent.setBackground(new Color(173, 255, 168));
+          } else {
+            cellComponent.setBackground(Color.WHITE);
           }
 
           return cellComponent;
@@ -213,5 +219,21 @@ public class ExpenseTrackerView extends JFrame {
 
   public void setCategoryField(JTextField categoryField) {
     this.categoryField = categoryField;
+  }
+
+  public JComboBox<String> getFilterDropDown() {
+    return filterDropDown;
+  }
+
+  public JFormattedTextField getAmountFilterMinField() {
+    return amountFilterMinField;
+  }
+
+  public JFormattedTextField getAmountFilterMaxField() {
+    return amountFilterMaxField;
+  }
+
+  public JTextField getCategoryFilterField() {
+    return categoryFilterField;
   }
 }
