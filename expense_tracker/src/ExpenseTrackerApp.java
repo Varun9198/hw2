@@ -41,16 +41,31 @@ public class ExpenseTrackerApp {
     view.getApplyFilterBtn().addActionListener(e -> {
         List<Object> filterObjects = new ArrayList<>();
         String filterType = Objects.requireNonNull(view.getFilterDropDown().getSelectedItem()).toString();
+        boolean filterConditionsValid = false;
         switch (filterType) {
           case "Category":
-            filterObjects.add(view.getCategoryFilterField().getText());
+            Object category = view.getCategoryFilterField().getText();
+            if(InputValidation.isValidCategory(category.toString())) {
+              filterConditionsValid = true;
+              filterObjects.add(category);
+            }
             break;
           case "Amount":
-            filterObjects.add(view.getAmountFilterMinField().getText());
-            filterObjects.add(view.getAmountFilterMaxField().getText());
+            double min = Double.parseDouble(view.getAmountFilterMinField().getText());
+            double max = Double.parseDouble(view.getAmountFilterMaxField().getText());
+            if(InputValidation.isValidAmount(min) && InputValidation.isValidAmount(max) && min <= max){
+              filterConditionsValid = true;
+              filterObjects.add(min);
+              filterObjects.add(max);
+            }
             break;
         }
-        controller.applyFilter(filterType, filterObjects);
+        if(filterConditionsValid) {
+          controller.applyFilter(filterType, filterObjects);
+        } else {
+          JOptionPane.showMessageDialog(view, "Invalid amount or category entered");
+          view.toFront();
+        }
     });
 
     view.getClearFilterBtn().addActionListener(e -> {

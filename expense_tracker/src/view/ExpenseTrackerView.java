@@ -170,7 +170,7 @@ public class ExpenseTrackerView extends JFrame {
 
           System.out.println(filteredTransactions.size());
           // Highlight rows in green if they are in the filteredTransactions list
-          if (row < filteredTransactions.size() && filteredTransactions.contains(transactions.get(row))) {
+          if (row < transactions.size() && filteredTransactions.contains(transactions.get(row))) {
             cellComponent.setBackground(new Color(173, 255, 168));
           } else {
             cellComponent.setBackground(Color.WHITE);
