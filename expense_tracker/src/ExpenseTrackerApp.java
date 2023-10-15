@@ -38,6 +38,9 @@ public class ExpenseTrackerApp {
         controller.applyFilter("Category", null);
     });
 
+    view.getClearFilterBtn().addActionListener(e -> {
+        controller.refresh();
+    });
   }
 
 }

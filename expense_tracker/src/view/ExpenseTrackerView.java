@@ -31,6 +31,7 @@ public class ExpenseTrackerView extends JFrame {
   private JFormattedTextField amountFilterMaxField;
   private JTextField categoryFilterField; //TODO: add validation
   private JButton applyFilterBtn; //TODO: add clear filter button
+  private JButton clearFilterBtn;
   
 
   public ExpenseTrackerView() {
@@ -73,7 +74,7 @@ public class ExpenseTrackerView extends JFrame {
     categoryFilterField = new JTextField(10);
 
     applyFilterBtn = new JButton("Apply Filter");
-
+    clearFilterBtn = new JButton("Clear Filter");
     JLabel filterLabel = new JLabel("Filter:");
     filterDropDown = new JComboBox<>(filters);
     JPanel filterPanel = new JPanel();
@@ -84,6 +85,7 @@ public class ExpenseTrackerView extends JFrame {
     filterPanel.add(amountFilterMaxField).setVisible(false);
     filterPanel.add(categoryFilterField).setVisible(false);
     filterPanel.add(applyFilterBtn);
+    filterPanel.add(clearFilterBtn);
 
     filterDropDown.addItemListener(e -> {
       if(e.getStateChange() == ItemEvent.SELECTED) {
@@ -134,7 +136,7 @@ public class ExpenseTrackerView extends JFrame {
         // Add total row
         Object[] totalRow = {"Total", null, null, totalCost};
         model.addRow(totalRow);
-
+      transactionsTable.setDefaultRenderer(Object.class, new DefaultTableCellRenderer());
       // Fire table update
       transactionsTable.updateUI();
 
@@ -182,6 +184,7 @@ public class ExpenseTrackerView extends JFrame {
   public JButton getApplyFilterBtn() {
     return applyFilterBtn;
   }
+  public JButton getClearFilterBtn() { return clearFilterBtn;}
   public DefaultTableModel getTableModel() {
     return model;
   }
