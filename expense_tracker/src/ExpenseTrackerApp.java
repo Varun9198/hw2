@@ -65,6 +65,7 @@ public class ExpenseTrackerApp {
         } else {
           JOptionPane.showMessageDialog(view, "Invalid amount or category entered");
           view.toFront();
+          controller.refresh();
         }
     });
 

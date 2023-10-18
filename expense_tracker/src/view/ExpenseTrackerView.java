@@ -29,7 +29,7 @@ public class ExpenseTrackerView extends JFrame {
   private JComboBox<String> filterDropDown;
   private JFormattedTextField amountFilterMinField;
   private JFormattedTextField amountFilterMaxField;
-  private JTextField categoryFilterField; //TODO: add validation
+  private JTextField categoryFilterField;
   private JButton applyFilterBtn;
   private JButton clearFilterBtn;
   
@@ -116,7 +116,7 @@ public class ExpenseTrackerView extends JFrame {
     add(new JScrollPane(transactionsTable), BorderLayout.CENTER);
 
     // Set frame properties
-    setSize(400, 300);
+    setSize(800, 300);
     setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     setVisible(true);
   
@@ -168,7 +168,7 @@ public class ExpenseTrackerView extends JFrame {
         public java.awt.Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
           java.awt.Component cellComponent = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
 
-          System.out.println(filteredTransactions.size());
+//          System.out.println(filteredTransactions.size());
           // Highlight rows in green if they are in the filteredTransactions list
           if (row < transactions.size() && filteredTransactions.contains(transactions.get(row))) {
             cellComponent.setBackground(new Color(173, 255, 168));
